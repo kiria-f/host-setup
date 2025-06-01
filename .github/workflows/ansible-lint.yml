@@ -3,21 +3,33 @@ name: Ansible files & Deployment
 on:
   push:
     paths:
-      - 'inventory/**'
-      - 'playbooks/**'
-      - 'roles/**'
+      - '**.yml'
   pull_request:
     paths:
-      - 'inventory/**'
-      - 'playbooks/**'
-      - 'roles/**'
+      - '**.yml'
 
 jobs:
-  ansible-lint:
-    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
-    with:
-      args: '-p'
+  lint:
+    runs-on: ubuntu-latest
 
-    # uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
-    # with:
-    #   args: '-p playbooks'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Ansible + Ansible Lint
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible ansible-lint
+
+      - name: Install required Ansible collections
+        run: |
+          ansible-galaxy collection install community.docker
+
+      - name: Run ansible-lint
+        run: |
+          ansible-lint
