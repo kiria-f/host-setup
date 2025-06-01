@@ -1,7 +1,7 @@
 ---
 - name: Create volume mount directory
   ansible.builtin.file:
-    path: '{{ clipcascade.data_dir }}'
+    path: '{{ clipcascade_data_dir }}'
     state: directory
     owner: root
     group: root
@@ -15,10 +15,10 @@
     state: started
     restart_policy: 'no'
     volumes:
-      - '{{ clipcascade.data_dir }}:/database'
+      - '{{ clipcascade_data_dir }}:/database'
     env:
-      CC_MAX_MESSAGE_SIZE_IN_MiB: '{{ clipcascad.max_msg_mb }}'
-      CC_P2P_ENABLED: '{{ clipcascad.p2p_enabled }}'
+      CC_MAX_MESSAGE_SIZE_IN_MiB: '{{ clipcascade_max_msg_mb }}'
+      CC_P2P_ENABLED: '{{ clipcascade_p2p_enabled }}'
       # CC_ALLOWED_ORIGINS: 'https://clipcascade.example.com'
       # CC_SIGNUP_ENABLED: 'false'
     labels:
