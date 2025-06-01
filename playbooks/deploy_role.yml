@@ -2,5 +2,7 @@
 - name: Deploy a specific role to all hosts
   hosts: all
   become: true
-  roles:
-    - '{{ ROLE_TO_DEPLOY }}'
+  tasks:
+    - name: Include the specified role
+      ansible.builtin.include_role:
+        name: '{{ ROLE_TO_DEPLOY }}'
