@@ -41,7 +41,12 @@
 
 - name: Add Docker APT repository
   ansible.builtin.apt_repository:
-    repo: 'deb [arch={{ docker_arch.stdout }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ubuntu_codename.stdout }} stable'
+    repo: >-
+      deb
+      [arch={{ docker_arch.stdout }} signed-by=/etc/apt/keyrings/docker.asc]
+      https://download.docker.com/linux/ubuntu
+      {{ ubuntu_codename.stdout }}
+      stable
     filename: docker
     state: present
     update_cache: true
