@@ -22,7 +22,7 @@
       # CC_ALLOWED_ORIGINS: 'https://clipcascade.example.com'
       # CC_SIGNUP_ENABLED: 'false'
     labels:
-      traefik.enable: true
+      traefik.enable: 'true'
       traefik.http.routers.clip-cascade.rule: 'Host(`clip-cascade.allrensys.com`)'
-      traefik.http.routers.clip-cascade.entrypoints: websecure
-      traefik.http.services.clip-cascade.loadbalancer.server.port: 8080
+      traefik.http.routers.clip-cascade.entrypoints: 'websecure'
+      traefik.http.services.clip-cascade.loadbalancer.server.port: '8080'
