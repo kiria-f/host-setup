@@ -1,7 +1,9 @@
 services:
   clipcascade:
     image: sathvikrao/clipcascade:latest
-    restart: 'no'
+    restart: 'unless-stopped'
+    networks:
+      - proxy
     container_name: clipcascade
     ports:
       - 8080:8080
@@ -17,3 +19,8 @@ services:
       traefik.http.routers.clipcascade.rule: 'Host(`clipcascade.allrensys.com`)'
       traefik.http.routers.clipcascade.entrypoints: 'websecure'
       traefik.http.services.clipcascade.loadbalancer.server.port: '8080'
+
+networks:
+  proxy:
+    name: proxy
+    external: true
