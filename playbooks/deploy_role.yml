@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Deploy a specific role to all hosts
+  hosts: all
   become: true
   roles:
     - '{{ ROLE_TO_DEPLOY }}'
