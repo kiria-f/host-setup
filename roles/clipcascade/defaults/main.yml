@@ -1,5 +1,5 @@
 ---
 clipcascade_app_path: '{{ apps_path }}/clipcascade'
 clipcascade_data_dir: '{{ clipcascade_app_path }}/data'
-clipcascade_max_msg_mb: 1
+clipcascade_max_msg_mb: '1'
 clipcascade_p2p_enabled: 'false'
