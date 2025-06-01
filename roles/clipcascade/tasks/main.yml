@@ -1,0 +1,28 @@
+---
+- name: Create volume mount directory
+  ansible.builtin.file:
+    path: '{{ clipcascade.data_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Deploy ClipCascade container
+  become: true
+  community.docker.docker_container:
+    name: clip-cascade
+    image: sathvikrao/clipcascade:latest
+    state: started
+    restart_policy: 'no'
+    volumes:
+      - '{{ clipcascade.data_dir }}:/database'
+    env:
+      CC_MAX_MESSAGE_SIZE_IN_MiB: '{{ clipcascad.max_msg_mb }}'
+      CC_P2P_ENABLED: '{{ clipcascad.p2p_enabled }}'
+      # CC_ALLOWED_ORIGINS: 'https://clipcascade.example.com'
+      # CC_SIGNUP_ENABLED: 'false'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.clip-cascade.rule=Host(`clip-cascade.allrensys.com`)'
+      - 'traefik.http.routers.clip-cascade.entrypoints=websecure'
+      - 'traefik.http.services.clip-cascade.loadbalancer.server.port=8080'

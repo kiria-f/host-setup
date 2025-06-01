@@ -1,0 +1,6 @@
+---
+clipcascade:
+  app_path: '{{ apps_path }}/clipcascade'
+  data_dir: '{{ apps_path }}/clipcascade/data'
+  max_msg_mb: 1
+  p2p_enabled: 'false'
