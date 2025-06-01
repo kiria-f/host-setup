@@ -1,0 +1,16 @@
+services:
+  clipcascade:
+    image: sathvikrao/clipcascade:latest
+    restart: 'no'
+    volumes:
+      - '{{ clipcascade_data_dir }}:/database'
+    environment:
+      CC_MAX_MESSAGE_SIZE_IN_MiB: '{{ clipcascade_max_msg_mb }}'
+      CC_P2P_ENABLED: '{{ clipcascade_p2p_enabled }}'
+      # CC_ALLOWED_ORIGINS: "https://clipcascade.example.com"
+      # CC_SIGNUP_ENABLED: "false"
+    labels:
+      traefik.enable: 'true'
+      traefik.http.routers.clip-cascade.rule: 'Host(`clip-cascade.allrensys.com`)'
+      traefik.http.routers.clip-cascade.entrypoints: 'websecure'
+      traefik.http.services.clip-cascade.loadbalancer.server.port: '8080'
