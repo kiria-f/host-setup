@@ -1,0 +1,6 @@
+all:
+  hosts:
+    myserver:
+      ansible_host: kiria-f.ru
+      ansible_port: 64000
+      ansible_user: ansible

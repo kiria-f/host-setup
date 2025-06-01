@@ -1,0 +1,39 @@
+name: Deploy with Ansible
+
+on:
+  push:
+    branches: ['master']
+
+  workflow_dispatch:
+    inputs:
+      role:
+        description: 'Ansible role to deploy'
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy Ansible Playbook
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          echo "${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Install Ansible
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Run Ansible Playbook
+        env:
+          ANSIBLE_USER: ansible
+          ANSIBLE_HOST_KEY_CHECKING: False
+          ROLE_TO_DEPLOY: ${{ github.event.inputs.role }}
+        run: |
+          ansible-playbook -i inventory playbooks/deploy_web_server.yml --private-key private_key.pem -u ansible
