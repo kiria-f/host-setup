@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy Ansible Playbook
+    name: Deploy ${{ github.event.inputs.role }}
     runs-on: ubuntu-latest
     environment: production
     steps:
