@@ -1,10 +1,10 @@
 services:
   clipcascade:
     image: sathvikrao/clipcascade:latest
+    container_name: clipcascade
     restart: 'unless-stopped'
     networks:
       - proxy
-    container_name: clipcascade
     ports:
       - 8080:8080
     volumes:
