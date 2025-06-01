@@ -1,4 +1,4 @@
-name: Deploy with Ansible
+name: Deploy a single role
 
 on:
   workflow_dispatch:
