@@ -33,4 +33,4 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
           ROLE_TO_DEPLOY: ${{ github.event.inputs.role }}
         run: |
-          ansible-playbook -i inventory playbooks/deploy_web_server.yml --private-key private_key.pem -u ansible
+          ansible-playbook -i inventory playbooks/deploy_role.yml --private-key private_key.pem -u ansible
