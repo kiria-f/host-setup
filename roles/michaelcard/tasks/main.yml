@@ -6,8 +6,8 @@
     mode: "u=rwx,g=rx,o=rx"
 
 - name: Copy web content to volume mount directory
-  ansible.builtin.copy:
-    src: "{{ michaelcard_web_content_src }}"
+  ansible.posix.synchronize:
+    src: "{{ role_path }}/files"
     dest: "{{ michaelcard_web_content }}"
     mode: "u=rw,g=r,o=r"
 
