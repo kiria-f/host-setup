@@ -5,6 +5,12 @@
     state: directory
     mode: "u=rwx,g=rx,o=rx"
 
+- name: Copy web content to volume mount directory
+  ansible.builtin.copy:
+    src: "{{ michaelcard_web_content_src }}"
+    dest: "{{ michaelcard_web_content }}"
+    mode: "u=rw,g=r,o=r"
+
 - name: Render docker-compose.yml from template
   ansible.builtin.template:
     src: docker-compose.yml.j2
