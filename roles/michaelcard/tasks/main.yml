@@ -1,17 +1,16 @@
 ---
 - name: Create volume mount directory
   ansible.builtin.file:
-    path: '{{ clipcascade_data_dir }}'
+    path: '{{ michaelcard_data_dir }}'
     state: directory
     mode: '0755'
 
 - name: Render docker-compose.yml from template
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: "{{ clipcascade_app_path }}/docker-compose.yml"
+    dest: "{{ michaelcard_app_path }}/docker-compose.yml"
     mode: '0644'
 
 - name: Start the container
   community.docker.docker_compose_v2:
-    project_src: "{{ clipcascade_app_path }}"
-
+    project_src: "{{ michaelcard_app_path }}"
