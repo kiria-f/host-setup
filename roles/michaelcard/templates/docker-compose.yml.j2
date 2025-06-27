@@ -9,7 +9,7 @@ services:
       - '{{ michaelcard_web_content }}:/usr/share/nginx/html:ro'
     labels:
       traefik.enable: 'true'
-      traefik.http.routers.michaelcard.rule: 'Host(`michaelcard.allrensys.com`)'
+      traefik.http.routers.michaelcard.rule: 'Host(`michael-card.{{ primary_domain }}`)'
       traefik.http.routers.michaelcard.entrypoints: 'websecure'
 
 networks:
