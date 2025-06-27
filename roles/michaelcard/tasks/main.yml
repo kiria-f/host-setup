@@ -1,15 +1,15 @@
 ---
 - name: Create volume mount directory
   ansible.builtin.file:
-    path: '{{ michaelcard_data_dir }}'
+    path: "{{ michaelcard_data_dir }}"
     state: directory
-    mode: '0755'
+    mode: "u=rwx,g=rx,o=rx"
 
 - name: Render docker-compose.yml from template
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ michaelcard_app_path }}/docker-compose.yml"
-    mode: '0644'
+    mode: "u=rw,g=r,o=r"
 
 - name: Start the container
   community.docker.docker_compose_v2:

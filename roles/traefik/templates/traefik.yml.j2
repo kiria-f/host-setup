@@ -1,0 +1,28 @@
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: letsEncrypt
+
+providers:
+  docker:
+    exposedByDefault: false
+
+certificatesResolvers:
+  letsEncrypt:
+    acme:
+      email: {{ trtraefik_acme_email }}
+      storage: acme.json
+      tlsChallenge: { }
+
+api:
+  dashboard: true
