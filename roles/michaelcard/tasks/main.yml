@@ -7,9 +7,8 @@
 
 - name: Copy web content to volume mount directory
   ansible.posix.synchronize:
-    src: "{{ role_path }}/files"
+    src: "{{ role_path }}/files/"
     dest: "{{ michaelcard_web_content }}"
-    mode: "u=rw,g=r,o=r"
 
 - name: Render docker-compose.yml from template
   ansible.builtin.template:
