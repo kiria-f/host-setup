@@ -1,7 +1,7 @@
 ---
 - name: Create volume mount directory
   ansible.builtin.file:
-    path: "{{ michaelcard_data_dir }}"
+    path: "{{ michaelcard_web_content }}"
     state: directory
     mode: "u=rwx,g=rx,o=rx"
 
