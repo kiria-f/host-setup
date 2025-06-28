@@ -25,5 +25,5 @@
     pull: always
 
 - name: Clean up dangling images
-  community.docker.docker_image_remove:
-    name: ghcr.io/kiria-f/bio
+  community.docker.docker_prune:
+    images: yes
