@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy ${{ github.event.inputs.role || github.event.client_payload.role}}
+    name: Deploy ${{ github.event.inputs.role || github.event.action }}
     runs-on: ubuntu-latest
     environment: production
     steps:
