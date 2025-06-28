@@ -17,18 +17,12 @@
     username: "{{ gh_username }}"
     password: "{{ ghcr_token }}"
 
-- name: Pull latest image
-  community.docker.docker_image:
-    name: ghcr.io/kiria-f/bio
-    tag: latest
-    source: pull
-    force_source: true
-
 - name: Recreate the container
   community.docker.docker_compose_v2:
     project_src: "{{ bio_app_path }}"
     remove_orphans: true
     recreate: always
+    pull: always
 
 - name: Clean up dangling images
   community.docker.docker_image_remove:
