@@ -1,6 +1,7 @@
 name: Deploy a single role
 
 on:
+  repository_dispatch:
   workflow_dispatch:
     inputs:
       role:
@@ -9,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy ${{ github.event.inputs.role }}
+    name: Deploy ${{ github.event.inputs.role || github.event.client_payload.role}}
     runs-on: ubuntu-latest
     environment: production
     steps:
