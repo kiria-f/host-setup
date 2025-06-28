@@ -1,0 +1,2 @@
+---
+bio_app_path: "{{ apps_path }}/bio"
