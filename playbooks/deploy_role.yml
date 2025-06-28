@@ -5,4 +5,4 @@
   tasks:
     - name: Include the specified role
       ansible.builtin.include_role:
-        name: '{{ ROLE_TO_DEPLOY }}'
+        name: "{{ role_to_deploy }}"

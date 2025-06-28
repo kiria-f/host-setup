@@ -11,6 +11,20 @@
     dest: "{{ bio_app_path }}/docker-compose.yml"
     mode: "u=rw,g=r,o=r"
 
-- name: Start the container
+- name: Login to GHCR
+  community.docker.docker_login:
+    registry_url: ghcr.io
+    username: "{{ gh_username }}"
+    password: "{{ ghcr_token }}"
+
+- name: Pull latest image
+  community.docker.docker_image:
+    name: ghcr.io/kiria-f/bio
+    tag: latest
+    source: pull
+
+- name: Recreate the container
   community.docker.docker_compose_v2:
     project_src: "{{ bio_app_path }}"
+    remove_orphans: true
+    recreate: always

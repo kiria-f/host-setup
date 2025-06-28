@@ -35,5 +35,11 @@ jobs:
         env:
           ANSIBLE_USER: ansible
           ANSIBLE_HOST_KEY_CHECKING: False
-        run: |
-          ansible-playbook -i inventory.yml playbooks/deploy_role.yml --private-key private_key.pem -e "ROLE_TO_DEPLOY=${{ github.event.inputs.role }}"
+        run: >-
+          ansible-playbook
+          -i inventory.yml
+          -e "role_to_deploy=${{ github.event.inputs.role }}"
+          -e "gh_username=${{ github.repository_owner }}"
+          -e "ghcr_token=${{ secrets.GHCR_TOKEN }}"
+          --private-key private_key.pem
+          playbooks/deploy_role.yml
