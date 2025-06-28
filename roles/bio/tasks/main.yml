@@ -29,3 +29,7 @@
     project_src: "{{ bio_app_path }}"
     remove_orphans: true
     recreate: always
+
+- name: Clean up dangling images
+  community.docker.docker_image_remove:
+    name: ghcr.io/kiria-f/bio
