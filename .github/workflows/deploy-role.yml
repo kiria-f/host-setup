@@ -46,7 +46,6 @@ jobs:
         run: >-
           ansible-playbook
           -e "role_to_deploy=${{ env.ROLE }}"
-          -e "image_tag=${{ env.IMAGE_TAG }}"
           -e "gh_username=${{ github.repository_owner }}"
           -e "ghcr_token=${{ secrets.GHCR_TOKEN }}"
           --private-key private_key.pem
