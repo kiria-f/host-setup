@@ -2,18 +2,26 @@ name: Deploy a single role
 
 on:
   repository_dispatch:
+    types: [Deploy a single role]
   workflow_dispatch:
     inputs:
       role:
         description: 'Ansible role to deploy'
         required: true
+      image_tag:
+        description: 'Docker image tag to deploy (if applicable)'
+        required: false
 
 jobs:
   deploy:
-    name: Deploy ${{ github.event.inputs.role || github.event.action }}
+    name: Deploy ${{ github.event.inputs.role || github.event.client_payload.role }}
     runs-on: ubuntu-latest
     environment: production
+    env:
+      ROLE: ${{ github.event.inputs.role || github.event.client_payload.role }}
+      IMAGE_TAG: ${{ github.event.inputs.image_tag || github.event.client_payload.image_tag }}
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -37,8 +45,8 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
         run: >-
           ansible-playbook
-          -i inventory.yml
-          -e "role_to_deploy=${{ github.event.inputs.role }}"
+          -e "role_to_deploy=${{ env.ROLE }}"
+          -e "image_tag=${{ env.IMAGE_TAG }}"
           -e "gh_username=${{ github.repository_owner }}"
           -e "ghcr_token=${{ secrets.GHCR_TOKEN }}"
           --private-key private_key.pem
