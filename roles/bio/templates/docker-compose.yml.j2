@@ -1,7 +1,7 @@
 services:
   bio:
     container_name: bio
-    image: ghcr.io/kiria-f/bio:{{ image_tag | default('latest') }}
+    image: ghcr.io/kiria-f/bio:latest
     networks:
       - proxy
     labels:
