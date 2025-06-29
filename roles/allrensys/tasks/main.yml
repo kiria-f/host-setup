@@ -1,0 +1,29 @@
+---
+- name: Create app directory
+  ansible.builtin.file:
+    path: "{{ allrensys_app_path }}"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Render docker-compose.yml from template
+  ansible.builtin.template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ allrensys_app_path }}/docker-compose.yml"
+    mode: "u=rw,g=r,o=r"
+
+- name: Login to GHCR
+  community.docker.docker_login:
+    registry_url: ghcr.io
+    username: "{{ gh_username }}"
+    password: "{{ ghcr_token }}"
+
+- name: Recreate the container
+  community.docker.docker_compose_v2:
+    project_src: "{{ allrensys_app_path }}"
+    remove_orphans: true
+    recreate: always
+    pull: always
+
+- name: Clean up dangling images
+  community.docker.docker_prune:
+    images: true

@@ -1,0 +1,2 @@
+---
+allrensys_app_path: "{{ apps_path }}/allrensys"
