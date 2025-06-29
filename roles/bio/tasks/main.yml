@@ -26,4 +26,4 @@
 
 - name: Clean up dangling images
   community.docker.docker_prune:
-    images: yes
+    images: true
