@@ -1,7 +1,12 @@
 all:
   hosts:
-    myserver:
+    aeza:
       ansible_host: kiria-f.ru
       ansible_port: 64000
+      ansible_user: ansible
+      ansible_python_interpreter: /usr/bin/python3
+    cloud_ru:
+      ansible_host: 82.202.137.251
+      ansible_port: 22
       ansible_user: ansible
       ansible_python_interpreter: /usr/bin/python3
