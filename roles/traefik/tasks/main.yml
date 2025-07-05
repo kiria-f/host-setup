@@ -14,6 +14,12 @@
     - docker-compose.yml
     - traefik.yml
 
+- name: Ensure acme.json exists with correct permissions
+  ansible.builtin.file:
+    path: "{{ traefik_app_path }}/acme.json"
+    state: touch
+    mode: "u=rw,go="
+
 - name: Start the container
   community.docker.docker_compose_v2:
     project_src: "{{ traefik_app_path }}"
