@@ -1,7 +1,7 @@
 all:
   hosts:
     aeza:
-      ansible_host: "150.241.85.138"
+      ansible_host: "84.22.148.243"
       ansible_port: 64000
       ansible_user: ansible
       ansible_python_interpreter: /usr/bin/python3
