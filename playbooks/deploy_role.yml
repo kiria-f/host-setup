@@ -1,6 +1,6 @@
 ---
 - name: Deploy a specific role to all hosts
-  hosts: cloud_ru
+  hosts: aeza
   become: true
   tasks:
     - name: Include the specified role
