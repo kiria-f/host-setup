@@ -1,0 +1,2 @@
+---
+node_exporter_app_path: '{{ apps_path }}/node_exporter'

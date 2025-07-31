@@ -1,0 +1,16 @@
+---
+- name: Create app directory
+  ansible.builtin.file:
+    path: "{{ node_exporter_app_path }}"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Copy docker-compose.yml
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/docker-compose.yml"
+    dest: "{{ node_exporter_app_path }}/"
+    mode: "u=rw,g=rw,o=rw"
+
+- name: Start the container
+  community.docker.docker_compose_v2:
+    project_src: "{{ node_exporter_app_path }}"

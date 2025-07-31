@@ -36,7 +36,7 @@
 
 - name: Get Ubuntu codename
   ansible.builtin.shell: . /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}"
-  register: ubuntu_codename
+  register: docker_ubuntu_codename
   changed_when: false
 
 - name: Add Docker APT repository
@@ -45,7 +45,7 @@
       deb
       [arch={{ docker_arch.stdout }} signed-by=/etc/apt/keyrings/docker.asc]
       https://download.docker.com/linux/ubuntu
-      {{ ubuntu_codename.stdout }}
+      {{ docker_ubuntu_codename.stdout }}
       stable
     filename: docker
     state: present
