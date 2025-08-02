@@ -1,0 +1,10 @@
+---
+- name: Update root bashrc
+  ansible.builtin.blockinfile:
+    path: /root/.bashrc
+    marker: "# {mark} ANSIBLE MANAGED SECTION"
+    block: "{{ lookup('file', 'files/bashrc.sh') }}"
+    create: true
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
