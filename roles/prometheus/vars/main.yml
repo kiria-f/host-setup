@@ -1,0 +1,2 @@
+---
+prometheus_app_path: "{{ apps_path }}/prometheus"

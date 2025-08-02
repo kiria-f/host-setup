@@ -14,9 +14,8 @@
     dest: "{{ grafana_app_path }}/docker-compose.yml"
     mode: '0644'
 
-- name: Deploy Grafana with Docker Compose
+- name: Restart container
   community.docker.docker_compose_v2:
     project_src: "{{ grafana_app_path }}"
-    remove_orphans: true
     recreate: always
-    pull: always
+    remove_orphans: true

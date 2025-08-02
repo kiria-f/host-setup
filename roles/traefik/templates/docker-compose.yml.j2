@@ -16,6 +16,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.traefik.rule=HostRegexp(`traefik.({{ primary_domain }}|{{ shadow_domain }})`)
       - traefik.http.routers.traefik.service=api@internal
+
 networks:
   proxy:
     name: proxy

@@ -1,3 +1,5 @@
 {
-    "ansible.python.interpreterPath": "d:\\Code\\Ansible\\host-setup\\.venv\\Scripts\\python.exe"
+    "cSpell.words": [
+        "traefik"
+    ]
 }

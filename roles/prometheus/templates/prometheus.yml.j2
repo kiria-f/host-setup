@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets: ['host.docker.internal:9100']  # Для Linux
+      # - targets: ['{{ ansible_host }}:9100']  # Альтернатива, если host.docker.internal не работает

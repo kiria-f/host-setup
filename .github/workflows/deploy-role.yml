@@ -26,14 +26,19 @@ jobs:
           echo "${{ secrets.ANSIBLE_SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
 
-      - name: Install Ansible
-        shell: bash
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
+      - name: Set up python dependencies
+          pip install ansible
+        run: echo ansible > requirements.txt
+
+      - name: Install python with pip dependencies
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
 
       - name: Install Ansible collections
-        run: ansible-galaxy collection install community.docker
+        run: |
+          ansible-galaxy collection install community.docker
 
       - name: Run Ansible Playbook
         env:
