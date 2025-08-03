@@ -3,16 +3,16 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: '0755'
+    mode: "u=rwx,g=rx,o=rx"
   loop:
     - "{{ grafana_app_path }}/datasources"
     - "{{ grafana_app_path }}/provisioning/dashboards"
 
-- name: Create docker-compose file from template
+- name: Render docker-compose file from template
   ansible.builtin.template:
     src: docker-compose.yml.j2
     dest: "{{ grafana_app_path }}/docker-compose.yml"
-    mode: '0644'
+    mode: "u=rw,g=r,o=r"
 
 - name: Restart container
   community.docker.docker_compose_v2:
