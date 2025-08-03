@@ -5,11 +5,11 @@
     state: directory
     mode: "u=rwx,g=rx,o=rx"
 
-- name: Copy docker-compose.yml
-  ansible.builtin.copy:
-    src: "{{ role_path }}/files/docker-compose.yml"
-    dest: "{{ node_exporter_app_path }}/"
-    mode: "u=rw,g=rw,o=rw"
+- name: Render docker-compose.yml from template
+  ansible.builtin.template:
+    src: "docker-compose.yml.j2"
+    dest: "{{ node_exporter_app_path }}/docker-compose.yml"
+    mode: "u=rw,g=r,o=r"
 
 - name: Start the container
   community.docker.docker_compose_v2:

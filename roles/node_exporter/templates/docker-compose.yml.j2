@@ -1,0 +1,26 @@
+services:
+  node_exporter:
+    container_name: node-exporter
+    image: prom/node-exporter:latest
+    networks:
+      - proxy
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.node-exporter.rule=HostRegexp(`node-exporter.({{ primary_domain }}|{{ shadow_domain }})`)"
+      - "traefik.http.routers.node-exporter.entrypoints=websecure"
+      - "traefik.http.services.node-exporter.loadbalancer.server.port=9100"
+
+networks:
+  proxy:
+    name: proxy
+    external: true

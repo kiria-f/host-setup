@@ -8,6 +8,10 @@ on:
       role:
         description: 'Ansible role to deploy'
         required: true
+      update_cache:
+        description: 'Update Ansible packages'
+        type: boolean
+        default: false
 
 jobs:
   deploy:
@@ -16,6 +20,7 @@ jobs:
     environment: production
     env:
       ROLE: ${{ github.event.inputs.role || github.event.client_payload.role }}
+      UPDATE_CACHE: ${{ github.event.inputs.update_cache || github.event.client_payload.update_cache }}
     steps:
 
       - name: Checkout repository
@@ -27,7 +32,6 @@ jobs:
           chmod 600 private_key.pem
 
       - name: Set up python dependencies
-          pip install ansible
         run: echo ansible > requirements.txt
 
       - name: Install python with pip dependencies
@@ -36,8 +40,10 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
 
-      - name: Install Ansible collections
+      - name: Install Ansible
+        if: env.UPDATE_CACHE == true
         run: |
+          pip install -r requirements.txt
           ansible-galaxy collection install community.docker
 
       - name: Run Ansible Playbook
