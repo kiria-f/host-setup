@@ -1,6 +1,3 @@
-alias py="python3"
-alias dc="docker compose"
-
 last_dirs() (
   path="$(pwd)"
   home=~
