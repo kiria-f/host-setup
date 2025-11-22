@@ -50,10 +50,13 @@ jobs:
         env:
           ANSIBLE_USER: ansible
           ANSIBLE_HOST_KEY_CHECKING: False
-        run: >-
-          ansible-playbook
-          -e "role_to_deploy=${{ env.ROLE }}"
-          -e "gh_username=${{ github.repository_owner }}"
-          -e 'gh_secrets_json=${{ toJson(secrets) }}'
-          --private-key private_key.pem
+        run: |
+          ansible-playbook \
+          -e "role_to_deploy=${{ env.ROLE }}" \
+          -e "gh_username=${{ github.repository_owner }}" \
+          -e "gh_secrets_json='$(cat << EOF | sed 's|"|\\"|g' | sed 's|\\n||g' | tr -d '\n'
+          ${{ toJson(secrets) }}
+          EOF
+          )'" \
+          --private-key private_key.pem \
           playbooks/deploy_role.yml

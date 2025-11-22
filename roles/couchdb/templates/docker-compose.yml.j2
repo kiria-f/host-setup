@@ -10,7 +10,7 @@ services:
      - ./config:/opt/couchdb/etc/local.d
      - ./log:/opt/couchdb/var/log
     environment:
-      COUCHDB_USER: {{ gh_secrets.COUCHDB_USERNAME }}
+      COUCHDB_USER: {{ gh_secrets.COUCHDB_USER }}
       COUCHDB_PASSWORD: {{ gh_secrets.COUCHDB_PASSWORD }}
     labels:
       - "traefik.enable=true"

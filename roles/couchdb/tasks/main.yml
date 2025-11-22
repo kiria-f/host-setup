@@ -20,3 +20,20 @@
     project_src: "{{ couchdb_app_path }}"
     recreate: always
     remove_orphans: true
+
+- name: Ensure CouchDB system DB exists
+  ansible.builtin.uri:
+    url: "https://couchdb.{{ shadow_domain }}/{{ tablename }}"
+    method: PUT
+    user: "{{ gh_secrets.COUCHDB_USER }}"
+    password: "{{ gh_secrets.COUCHDB_PASSWORD }}"
+    force_basic_auth: true
+    status_code: [201, 412]
+  register: couchdb_create_system_db
+  failed_when: couchdb_create_system_db.status not in [201, 412]
+  loop:
+    - _users
+    - _replicator
+    - _global_changes
+  loop_control:
+    loop_var: tablename

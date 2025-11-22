@@ -1,0 +1,6 @@
+---
+- name: Test
+  ansible.builtin.copy:
+    content: '{{ gh_secrets_json }}'
+    dest: /tmp/gh_secrets.json
+    mode: "u=rwx,g=rx,o=rx"
