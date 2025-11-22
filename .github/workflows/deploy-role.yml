@@ -54,6 +54,6 @@ jobs:
           ansible-playbook
           -e "role_to_deploy=${{ env.ROLE }}"
           -e "gh_username=${{ github.repository_owner }}"
-          -e "ghcr_token=${{ secrets.GHCR_TOKEN }}"
+          -e 'gh_secrets_json=${{ toJson(secrets) }}'
           --private-key private_key.pem
           playbooks/deploy_role.yml

@@ -1,0 +1,24 @@
+services:
+  couchdb:
+    image: couchdb
+    container_name: couchdb
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+     - ./data:/opt/couchdb/data
+     - ./config:/opt/couchdb/etc/local.d
+     - ./log:/opt/couchdb/var/log
+    environment:
+      COUCHDB_USER: {{ gh_secrets.COUCHDB_USERNAME }}
+      COUCHDB_PASSWORD: {{ gh_secrets.COUCHDB_PASSWORD }}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.couchdb.rule=Host(`couchdb.{{ shadow_domain }}`)"
+      - "traefik.http.routers.couchdb.entrypoints=websecure"
+      - "traefik.http.services.couchdb.loadbalancer.server.port=5984"
+
+networks:
+  proxy:
+    name: proxy
+    external: true
