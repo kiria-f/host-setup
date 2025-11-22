@@ -6,7 +6,7 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=HostRegexp(`grafana.({{ primary_domain }}|{{ shadow_domain }})`)"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.{{ shadow_domain }}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
     restart: unless-stopped

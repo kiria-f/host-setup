@@ -15,7 +15,7 @@
   community.docker.docker_login:
     registry_url: ghcr.io
     username: "{{ gh_username }}"
-    password: "{{ ghcr_token }}"
+    password: "{{ gh_secrets.GHCR_TOKEN }}"
 
 - name: Recreate the container
   community.docker.docker_compose_v2:
