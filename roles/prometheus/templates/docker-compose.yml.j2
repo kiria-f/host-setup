@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometheus.rule=HostRegexp(`prometheus.({{ primary_domain }}|{{ shadow_domain }})`)"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.{{ shadow_domain }}`)"
       - "traefik.http.routers.prometheus.entrypoints=websecure"
       - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
 
