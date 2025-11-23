@@ -54,8 +54,20 @@ jobs:
           ansible-playbook \
           -e "role_to_deploy=${{ env.ROLE }}" \
           -e "gh_username=${{ github.repository_owner }}" \
-          -e "gh_secrets_json='$(cat << EOF | sed 's|"|\\"|g' | sed 's|\\n||g' | tr -d '\n'
+          -e "gh_secrets_json_base64='$( \
+            cat << 'EOF' \
+            | sed -E 's|([^\\][^r])\\n|\1\\n|g' \
+            | sed 's|\\r\\n|\\n|g' \
+            | base64 --wrap=0
           ${{ toJson(secrets) }}
+          EOF
+          )'" \
+          -e "gh_vars_json_base64='$( \
+            cat << 'EOF' \
+            | sed -E 's|([^\\][^r])\\n|\1\\n|g' \
+            | sed 's|\\r\\n|\\n|g' \
+            | base64 --wrap=0
+          ${{ toJson(vars) }}
           EOF
           )'" \
           --private-key private_key.pem \

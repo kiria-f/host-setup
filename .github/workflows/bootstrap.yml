@@ -1,0 +1,60 @@
+name: Bootstrap Server for Ansible
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: 'Host to bootstrap'
+        required: true
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Bootstrap remote server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ github.event.inputs.host }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # 1. Создать пользователя ansible
+            id ansible &>/dev/null || useradd -m -s /bin/bash ansible
+
+            # 2. Разрешить sudo без пароля
+            echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+            chmod 440 /etc/sudoers.d/ansible
+
+            # 3. Создать .ssh
+            mkdir -p /home/ansible/.ssh
+            chmod 700 /home/ansible/.ssh
+
+            # 4. Добавить публичный ключ GitHub Actions
+            echo "${{ secrets.ANSIBLE_PUBLIC_KEY }}" > /home/ansible/.ssh/authorized_keys
+            chmod 600 /home/ansible/.ssh/authorized_keys
+            chown -R ansible:ansible /home/ansible/.ssh
+
+            # 5. Добавить GitHub в known_hosts
+            ssh-keyscan github.com >> /home/ansible/.ssh/known_hosts
+            chown ansible:ansible /home/ansible/.ssh/known_hosts
+
+            # 6. Установить Python, pip и virtualenv
+            if command -v pacman >/dev/null; then
+              pacman -Sy --noconfirm python python-pip
+            elif command -v apt-get >/dev/null; then
+              apt-get update && apt-get install -y python3 python3-pip python3-venv
+            fi
+
+            # 7. Создать venv
+            sudo -u ansible python3 -m venv /home/ansible/venv
+
+            # 8. Поставить зависимости для Ansible модулей
+            sudo -u ansible /home/ansible/venv/bin/pip install --upgrade pip
+            sudo -u ansible /home/ansible/venv/bin/pip install requests docker PyYAML
+
+            # 9. Проверка
+            sudo -u ansible /home/ansible/venv/bin/python -m pip list

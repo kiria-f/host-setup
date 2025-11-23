@@ -1,7 +1,8 @@
 apps_path: /apps
 primary_domain: kiria-f.ru
 shadow_domain: allrensys.com
-gh_secrets: "{{ gh_secrets_json | from_json }}"
+gh_secrets: "{{ gh_secrets_json_base64 | b64decode | from_json }}"
+gh_vars: "{{ gh_vars_json_base64 | b64decode | from_json }}"
 
 deployment:
   allrensys:
