@@ -6,6 +6,7 @@ services:
       - proxy
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     restart: unless-stopped
