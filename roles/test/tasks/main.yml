@@ -1,6 +1,21 @@
 ---
-- name: Test
+- name: Dump base64
   ansible.builtin.copy:
-    content: '{{ gh_secrets_json }}'
-    dest: /tmp/gh_secrets.json
+    content: '{{ gh_vars_json_base64 }}'
+    dest: /tmp/gh_vars.txt
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Dump JSON
+  ansible.builtin.copy:
+    content: '{{ gh_vars_json_base64 }}'
+    dest: /tmp/gh_vars.txt
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: Dump decoded
+  ansible.builtin.copy:
+    content: |
+      {% for k, v in gh_vars.items() %}
+      {{ k }}={{ v | quote }}
+      {% endfor %}
+    dest: /tmp/gh_vars.sh
     mode: "u=rwx,g=rx,o=rx"

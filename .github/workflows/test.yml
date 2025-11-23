@@ -1,0 +1,26 @@
+name: Run some tests
+
+on:
+  repository_dispatch:
+    types: [Run some tests]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Run some tests
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Debug json vars
+        run: |
+          cat << EOF
+          ${{ toJson(vars) }}
+          EOF
+
+      - name: Debug modified json vars
+        run: |
+          cat << 'EOF' \
+          | sed -E 's|([^\\][^r])\\n|\1\\\\n|g' \
+          | sed 's|\\r\\n|\\n|g' \
+          ${{ toJson(vars) }}
+          EOF
