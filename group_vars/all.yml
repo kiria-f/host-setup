@@ -9,15 +9,18 @@ deployment:
     - fornex
   bashrc:
     - fornex
+    - aeza
   bio:
-    - fornex
+    - aeza
   couchdb:
     - fornex
   grafana:
-    - fornex
+    - aeza
   node_exporter:
     - fornex
+    - aeza
   prometheus:
-    - fornex
+    - aeza
   traefik:
     - fornex
+    - aeza
