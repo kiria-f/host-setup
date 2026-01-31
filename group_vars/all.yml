@@ -11,6 +11,7 @@ deployment:
     - fornex
   bio:
     - fornex
+    - aws
   couchdb:
     - fornex
   grafana:
@@ -21,3 +22,4 @@ deployment:
     - fornex
   traefik:
     - fornex
+    - aws

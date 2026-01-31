@@ -15,3 +15,8 @@ all:
       ansible_port: 22
       ansible_user: ansible
       ansible_python_interpreter: /home/ansible/venv/bin/python3
+    aws:
+      ansible_host: "3.79.236.243"
+      ansible_port: 22
+      ansible_user: ubuntu
+      ansible_python_interpreter: /usr/bin/python3
