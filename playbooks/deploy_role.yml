@@ -1,6 +1,6 @@
 ---
 - name: Deploy a specific role to all hosts
-  hosts: fornex
+  hosts: aws
   become: true
   tasks:
     - name: Include the specified role
