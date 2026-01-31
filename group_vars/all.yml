@@ -10,7 +10,6 @@ deployment:
   bashrc:
     - fornex
   bio:
-    - fornex
     - aws
   couchdb:
     - fornex
@@ -21,5 +20,4 @@ deployment:
   prometheus:
     - fornex
   traefik:
-    - fornex
     - aws
