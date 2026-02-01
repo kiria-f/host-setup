@@ -1,0 +1,28 @@
+name: Deploy a single role
+
+on:
+  repository_dispatch:
+    types: [Deploy an external app]
+
+jobs:
+  deploy:
+    name: Deploy ${{ github.event.repository.name }} -> ${{ github.event.client_payload.host }}
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ github.event.client_payload.host }}
+      DEPLOY_ADDRESS: ${{ github.event.client_payload.address }}
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show envs
+        run: |
+          echo "DEPLOY_HOST=${{ env.DEPLOY_HOST }}"
+          echo "DEPLOY_ADDRESS=${{ env.DEPLOY_ADDRESS }}"
+          echo "GITHUB_TR_ACTOR=${{ github.triggering_actor }}"
+          echo "GITHUB_REPOSITORY_NAME=${{ github.event.repository.name }}"
+          echo "GITHUB_ACTOR=${{ github.actor }}"
+          echo "GITHUB_SENDER=${{ github.event.sender }}"
+          echo "GITHUB_SENDER_LOGIN=${{ github.event.sender.login }}"

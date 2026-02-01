@@ -22,5 +22,11 @@ deployment:
   prometheus:
     - aeza
   traefik:
+    - aws
+
+acceess:
+  kiria-f:
     - fornex
-    - aeza
+    - aws
+  kiria-f-alt:
+    - aws
