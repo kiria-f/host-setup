@@ -21,3 +21,10 @@ deployment:
     - fornex
   traefik:
     - aws
+
+acceess:
+  kiria-f:
+    - fornex
+    - aws
+  kiria-f-alt:
+    - aws
