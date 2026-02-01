@@ -1,8 +1,10 @@
 ---
 - name: Deploy a specific role to all hosts
-  hosts: fornex
+  vars:
+    deployment:
+      telepovs:
+        - aws
+  hosts: "{{ deployment[role_to_deploy] }}"
   become: true
-  tasks:
-    - name: Include the specified role
-      ansible.builtin.include_role:
-        name: "{{ role_to_deploy }}"
+  roles:
+    - role: "{{ role_to_deploy }}"

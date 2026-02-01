@@ -1,3 +1,0 @@
----
-michaelcard_app_path: '{{ apps_path }}/michaelcard'
-michaelcard_web_content: '{{ michaelcard_app_path }}/web'
